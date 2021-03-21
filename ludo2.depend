@@ -1,0 +1,139 @@
+# depslib dependency file v1.0
+1578113489 source:d:\dha suffa\datastructures\project\ludo2\coin.cpp
+	"coin.h"
+
+1578113503 d:\dha suffa\datastructures\project\ludo2\coin.h
+	"player.h"
+	<iostream>
+	<graphics.h>
+
+1577735301 source:d:\dha suffa\datastructures\project\ludo2\dice.cpp
+	"dice.h"
+
+1577734227 d:\dha suffa\datastructures\project\ludo2\dice.h
+	<iostream>
+	<graphics.h>
+	<cstdlib>
+	<time.h>
+
+1577541539 source:d:\dha suffa\datastructures\project\ludo2\adjlist.cpp
+	"AdjList.h"
+
+1577725401 d:\dha suffa\datastructures\project\ludo2\adjlist.h
+	"Node.h"
+
+1578286694 d:\dha suffa\datastructures\project\ludo2\node.h
+	<iostream>
+	<stack>
+	"coin.h"
+	"player.h"
+
+1579075817 d:\dha suffa\datastructures\project\ludo2\player.h
+	<iostream>
+	<graphics.h>
+	"coin.h"
+	"Graph.h"
+	<queue>
+
+1578286073 d:\dha suffa\datastructures\project\ludo2\graph.h
+	"AdjList.h"
+	"player.h"
+
+1578282499 source:d:\dha suffa\datastructures\project\ludo2\blue.cpp
+	"Blue.h"
+
+1578052336 d:\dha suffa\datastructures\project\ludo2\blue.h
+	<iostream>
+	<graphics.h>
+	"player.h"
+
+1578290310 source:d:\dha suffa\datastructures\project\ludo2\green.cpp
+	"Green.h"
+
+1578052608 d:\dha suffa\datastructures\project\ludo2\green.h
+	<iostream>
+	<graphics.h>
+	"player.h"
+
+1578118072 source:d:\dha suffa\datastructures\project\ludo2\player.cpp
+	"player.h"
+
+1578286672 source:d:\dha suffa\datastructures\project\ludo2\board.cpp
+	"board.h"
+
+1577620855 d:\dha suffa\datastructures\project\ludo2\board.h
+	<iostream>
+	<graphics.h>
+	"Graph.h"
+
+1578290124 source:d:\dha suffa\datastructures\project\ludo2\main.cpp
+	"board.h"
+	"dice.h"
+	"Red.h"
+	"Blue.h"
+	"Yellow.h"
+	"Green.h"
+	"Graph.h"
+
+1578052258 d:\dha suffa\datastructures\project\ludo2\red.h
+	<iostream>
+	<graphics.h>
+	"player.h"
+
+1578052602 d:\dha suffa\datastructures\project\ludo2\yellow.h
+	<iostream>
+	<graphics.h>
+	"player.h"
+
+1578117984 source:d:\dha suffa\datastructures\project\ludo2\red.cpp
+	"Red.h"
+
+1578290252 source:d:\dha suffa\datastructures\project\ludo2\yellow.cpp
+	"Yellow.h"
+
+1577690161 d:\dha suffa\datastructures\project\ludo2\\node.h
+	"coin.h"
+	"player.h"
+
+1577656764 d:\dha suffa\datastructures\project\ludo2\\coin.h
+	<iostream>
+	<graphics.h>
+
+1577691010 d:\dha suffa\datastructures\project\ludo2\\player.h
+	<iostream>
+	<graphics.h>
+	"coin.h"
+	"Graph.h"
+
+1577691188 d:\dha suffa\datastructures\project\ludo2\\graph.h
+	"AdjList.h"
+
+1577691325 d:\dha suffa\datastructures\project\ludo2\\adjlist.h
+	"\Node.h"
+
+1578289833 source:d:\dha suffa\datastructures\project\ludo2\graph.cpp
+	"Graph.h"
+
+1577690161 d:\dha suffa\datastructures\project\ludo2\/\node.h
+	"coin.h"
+	"player.h"
+
+1577656764 d:\dha suffa\datastructures\project\ludo2\\\coin.h
+	<iostream>
+	<graphics.h>
+
+1577691010 d:\dha suffa\datastructures\project\ludo2\\\player.h
+	<iostream>
+	<graphics.h>
+	"coin.h"
+	"Graph.h"
+
+1577691188 d:\dha suffa\datastructures\project\ludo2\\\graph.h
+	"AdjList.h"
+
+1577691344 d:\dha suffa\datastructures\project\ludo2\\\adjlist.h
+	"/Node.h"
+
+1578285777 source:d:\dha suffa\datastructures\project\ludo2\node.cpp
+	"Node.h"
+

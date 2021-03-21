@@ -1,0 +1,850 @@
+#include<iostream>
+#include<graphics.h>
+#include<queue>
+#include<cstdlib>
+#include<time.h>
+#include<stack>
+
+class Board
+{
+private:
+
+public:
+    Board();
+    ~Board();
+    void create();
+    void fillings();
+    Graph* createGraph();
+};
+
+#include"board.h"
+Board::Board()
+{
+    initwindow(1500,800);
+    setbkcolor(WHITE);
+    cleardevice();
+    setcolor(BLACK);
+}
+Board::~Board()
+{
+    closegraph();
+}
+void Board::create()
+{
+    // Grouping
+
+    setfillstyle(SOLID_FILL,LIGHTRED);
+    rectangle(0,0,300,300);
+    floodfill(150,150, BLACK);
+
+    setfillstyle(SOLID_FILL,LIGHTBLUE);
+    rectangle(495,0,795,300);
+    floodfill(750,100, BLACK);
+
+    setfillstyle(SOLID_FILL,LIGHTGREEN);
+    rectangle(0,495,300,795);
+    floodfill(150,600, BLACK);
+
+    setfillstyle(SOLID_FILL,YELLOW);
+    rectangle(495,495,795,795);
+    floodfill(750,600, BLACK);
+
+    // stairs
+
+    setfillstyle(SOLID_FILL,LIGHTGRAY);
+
+    for(int i=300;i<=430;i=i+65)
+    {
+        for(int j=0;j<=250;j=j+50)
+        {
+            rectangle(i,j,i+65,j+50);
+            floodfill(i+10,j+10, BLACK);
+        }
+    }
+
+    for(int i=300;i<=430;i=i+65)
+    {
+        for(int j=495;j<=745;j=j+50)
+        {
+            rectangle(i,j,i+65,j+50);
+            floodfill(i+10,j+10, BLACK);
+        }
+    }
+
+    for(int i=0;i<=250;i=i+50)
+    {
+        for(int j=300;j<=430;j=j+65)
+        {
+            rectangle(i,j,i+50,j+65);
+            floodfill(i+10,j+10, BLACK);
+        }
+    }
+
+    for(int i=495;i<=745;i=i+50)
+    {
+        for(int j=300;j<=430;j=j+65)
+        {
+            rectangle(i,j,i+50,j+65);
+            floodfill(i+10,j+10, BLACK);
+        }
+    }
+
+    // center Box
+
+    line(300,300,495,495);
+    line(300,495,495,300);
+
+    // Colors
+
+    setfillstyle(SOLID_FILL,LIGHTBLUE);
+
+    floodfill(310,120,BLACK);
+    floodfill(450,60,BLACK);
+
+    for(int i=60;i<360;i=i+50)
+        floodfill(400,i,BLACK);
+
+    setfillstyle(SOLID_FILL,YELLOW);
+
+    floodfill(690,350,BLACK);
+    floodfill(740,490,BLACK);
+
+    for(int i=410;i<745;i=i+50)
+        floodfill(i,400,BLACK);
+
+
+    setfillstyle(SOLID_FILL,LIGHTGREEN);
+
+    floodfill(480,680,BLACK);
+    floodfill(310,730,BLACK);
+
+    for(int i=410;i<730;i=i+50)
+        floodfill(400,i,BLACK);
+
+
+    setfillstyle(SOLID_FILL,LIGHTRED);
+
+    floodfill(120,480,BLACK);
+    floodfill(60,310,BLACK);
+
+    for(int i=60;i<350;i=i+50)
+        floodfill(i,400,BLACK);
+
+    int x=1400,y=1;
+    settextstyle(BOLD_FONT,HORIZ_DIR,4);
+    setfillstyle(SOLID_FILL,LIGHTCYAN);
+    rectangle(x,y,x+100,y+100);
+    outtextxy(x+10,y+40,"EXIT");
+    floodfill(x+10,y+50, BLACK);
+
+}
+Graph* Board::createGraph()
+{
+    Graph *pos=new Graph(52);
+    int x=25,y=325;
+    int h=0,k=0;
+
+    for(int i=0;i<5;i++)
+    {
+        x=x+50;
+        pos->addEdge(pos,i,x,y,i);
+    }
+    x=x+65;
+    for(int i=5;i<11;i++)
+    {
+        y=y-50;
+        pos->addEdge(pos,i,x,y,i);
+    }
+    // Blue Row
+    x=x+65;
+    pos->addEdge(pos,11,x,y,11);
+    h=x;
+    k=y;
+    for(int i=0;i<6;i++)
+    {
+        k=k+50;
+        pos->addEdge(pos,11,h,k,52+i);
+    }
+    //end row
+    x=x+65;
+    for(int i=12;i<18;i++)
+    {
+        pos->addEdge(pos,i,x,y,i);
+        y=y+50;
+    }
+    for(int i=18;i<24;i++)
+    {
+        x=x+50;
+        pos->addEdge(pos,i,x,y,i);
+    }
+    // Yellow row
+    y+=65;
+    pos->addEdge(pos,24,x,y,24);
+    h=x;
+    k=y;
+    for(int i=0;i<6;i++)
+    {
+        h-=50;
+        pos->addEdge(pos,24,h,k,58+i);
+    }
+    //end row
+    y+=65;
+    for(int i=25;i<31;i++)
+    {
+        pos->addEdge(pos,i,x,y,i);
+        x=x-50;
+    }
+    y=y+15;
+    for(int i=31;i<37;i++)
+    {
+        y=y+50;
+        pos->addEdge(pos,i,x,y,i);
+    }
+    //Green Row
+    x-=65;
+    pos->addEdge(pos,37,x,y,37);
+    h=x;
+    k=y;
+    for(int i=0;i<6;i++)
+    {
+        k=k-50;
+        pos->addEdge(pos,37,h,k,64+i);
+    }
+    //end row
+    x-=65;
+    for(int i=38;i<44;i++)
+    {
+        pos->addEdge(pos,i,x,y,i);
+        y=y-50;
+    }
+    x=x-15;
+    for(int i=44;i<50;i++)
+    {
+        x=x-50;
+        pos->addEdge(pos,i,x,y,i);
+
+    }
+    // Red row
+    y-=65;
+    pos->addEdge(pos,50,x,y,50);
+    h=x;
+    k=y;
+    for(int i=0;i<6;i++)
+    {
+        h+=50;
+        pos->addEdge(pos,50,h,k,70+i);
+    }
+    // end row
+    y-=80;
+    pos->addEdge(pos,51,x,y,51);
+    return pos;
+}
+
+class Dice
+{
+private:
+    int x;
+    int y;
+public:
+    Dice();
+    ~Dice();
+    void box();
+    int roll(int i,int j);
+};
+
+Dice::Dice():x(1000),y(100){}
+Dice::~Dice(){}
+int Dice::roll(int i,int j)
+{
+    srand(time(0));
+    int random=(rand()%6)+1;
+    char num=(char)(random+48);
+    outtextxy(x+40,y+40,&num);
+    cout<<num;
+    return num-48;
+}
+void Dice::box()
+{
+    settextstyle(BOLD_FONT,HORIZ_DIR,4);
+    setfillstyle(SOLID_FILL,WHITE);
+    rectangle(x,y,x+100,y+100);
+    outtextxy(x+10,y+40,"Dice");
+    floodfill(x+10,y+50, BLACK);
+    y=300;
+    rectangle(x,y,x+100,y+100);
+}
+class Coin{
+private:
+    int r;
+    int x;
+    int y;
+    int color;
+    int num;
+    int bkc;
+    class Player *clr;
+public:
+    Coin(int x,int y,int color,int num,Player *clr);
+    int coinNumber();
+    int getCoinClr();
+    int getbkc();
+    class Player* getClr();
+    ~Coin();
+};
+Coin::Coin(int x,int y,int color,int num,Player *clr)
+{
+    this->x=x;
+    this->y=y;
+    this->color=color;
+    this->num=num;
+    this->clr=clr;
+    r=20;
+    bkc=getpixel(x,y);
+    setfillstyle(SOLID_FILL,color);
+    circle(x,y,r);
+    floodfill(x+5,y+5, BLACK);
+
+}
+Coin::~Coin(){
+    setfillstyle(SOLID_FILL,bkc);
+    circle(x,y,r);
+    floodfill(x+5,y+5, bkc);
+}
+int Coin::coinNumber()
+{
+    return num;
+}
+int Coin::getCoinClr()
+{
+    return color;
+}
+int Coin::getbkc()
+{
+    return bkc;
+}
+class Player* Coin::getClr()
+{
+    return clr;
+}
+
+class Player
+{
+private:
+
+public:
+    Player();
+    ~Player();
+    virtual void play(int num)=0;
+    class Coin* setMember(int x,int y, int num, int color,Coin *temp);
+    void addMember(class Coin *temp);
+    virtual int getX(int num)=0;
+    virtual int getY(int num)=0;
+protected:
+    class Graph *graph;
+    int color;
+    int arr[4][2];
+    Coin *member[4];
+    class queue <Coin *> deActive;
+};
+
+Player::Player()
+{
+    member[0]=NULL;
+    member[1]=NULL;
+    member[2]=NULL;
+    member[3]=NULL;
+
+}
+Player::~Player()
+{
+
+}
+
+Coin* Player::setMember(int k,int l, int num2, int color,Coin *temp)
+{
+    Player *clr=temp->getClr();
+    delete temp;
+    temp=NULL;
+    Coin *temp2=new Coin(k,l,color,num2,clr);
+    return temp2;
+
+}
+
+void Player::addMember(Coin *temp)
+{
+    int num=temp->coinNumber();
+    Player *clr=temp->getClr();
+    clr->deActive.push(setMember(clr->getX(num),clr->getY(num),num,temp->getCoinClr(),temp));
+
+}
+using namespace std;
+
+class RedClr:public Player
+{
+private:
+
+public:
+    RedClr(int color,Graph *graph);
+    ~RedClr();
+    void play(int num);
+    int getX(int num);
+    int getY(int num);
+};
+RedClr::RedClr(int color,Graph *graph)
+{
+    this->graph=graph;
+    this->color=color;
+    int x=75,y=225;
+
+    arr[0][0]=x;
+    arr[0][1]=x;
+    arr[1][0]=y;
+    arr[1][1]=x;
+    arr[2][0]=x;
+    arr[2][1]=y;
+    arr[3][0]=y;
+    arr[3][1]=y;
+
+    member[0]=new Coin(arr[0][0],arr[0][1],color,0,this);
+    member[1]=new Coin(arr[1][0],arr[1][1],color,1,this);
+    member[2]=new Coin(arr[2][0],arr[2][1],color,2,this);
+    member[3]=new Coin(arr[3][0],arr[3][1],color,3,this);
+
+    deActive.push(member[0]);
+    deActive.push(member[1]);
+    deActive.push(member[2]);
+    deActive.push(member[3]);
+
+}
+RedClr::~RedClr(){}
+
+void RedClr::play(int num)
+{
+    int check=deActive.empty();
+    if(num==6&&check==0)
+    {
+        Coin *temp=deActive.front();
+        deActive.pop();
+        int color=temp->getCoinClr();
+        int pos=temp->coinNumber();
+        member[pos]=NULL;
+        graph->addCoin(graph,0,temp,this);
+        temp=NULL;
+    }
+    else if(deActive.size()<4)
+    {
+        int i=0,j=0;
+        do
+        {
+            getmouseclick(WM_RBUTTONDOWN,i,j);
+        }while(i<=0);
+
+        graph->newLoc(graph,i,j,num,this);
+    }
+
+}
+int RedClr::getX(int num){
+    return arr[num][0];
+}
+int RedClr::getY(int num){
+    return arr[num][1];
+}
+
+class BlueClr:public Player
+{
+private:
+
+public:
+    BlueClr(int color,Graph *graph);
+    ~BlueClr();
+    void play(int num);
+    int getX(int num);
+    int getY(int num);
+};
+BlueClr::BlueClr(int color,Graph *graph)
+{
+    this->graph=graph;
+    this->color=color;
+    int x=75,y=225;
+    arr[0][0]=x+495;
+    arr[0][1]=x;
+    arr[1][0]=y+495;
+    arr[1][1]=x;
+    arr[2][0]=x+495;
+    arr[2][1]=y;
+    arr[3][0]=y+495;
+    arr[3][1]=y;
+
+    member[0]=new Coin(arr[0][0],arr[0][1],color,0,this);
+    member[1]=new Coin(arr[1][0],arr[1][1],color,1,this);
+    member[2]=new Coin(arr[2][0],arr[2][1],color,2,this);
+    member[3]=new Coin(arr[3][0],arr[3][1],color,3,this);
+
+    deActive.push(member[0]);
+    deActive.push(member[1]);
+    deActive.push(member[2]);
+    deActive.push(member[3]);
+
+}
+BlueClr::~BlueClr(){}
+
+void BlueClr::play(int num){
+    int check=deActive.empty();
+    if(num==6&&check==0)
+    {
+        Coin *temp=deActive.front();
+        deActive.pop();
+        int color=temp->getCoinClr();
+        int pos=temp->coinNumber();
+        member[pos]=NULL;
+        graph->addCoin(graph,13,temp,this);
+        temp=NULL;
+    }
+    else if(deActive.size()<4)
+    {
+        int k=0,j=0;
+        for(int i=0;i<52;i++)
+        {
+            if(graph->getClr(graph,i)==1)
+            {
+                k=graph->getX(graph,i);
+                j=graph->getY(graph,i);
+                break;
+            }
+        }
+        graph->newLoc(graph,k,j,num,this);
+    }
+}
+int BlueClr::getX(int num){
+    return arr[num][0];
+}
+int BlueClr::getY(int num){
+    return arr[num][1];
+
+}
+class GreenClr:public Player
+{
+private:
+
+public:
+    GreenClr(int color,Graph *graph);
+    ~GreenClr();
+    void play(int num);
+    int getX(int num);
+    int getY(int num);
+};
+GreenClr::GreenClr(int color,Graph *graph)
+{
+    this->graph=graph;
+    this->color=color;
+    int x=75,y=225;
+    arr[0][0]=x;
+    arr[0][1]=x+495;
+    arr[1][0]=y;
+    arr[1][1]=x+495;
+    arr[2][0]=x;
+    arr[2][1]=y+495;
+    arr[3][0]=y;
+    arr[3][1]=y+495;
+    member[0]=new Coin(arr[0][0],arr[0][1],color,0,this);
+    member[1]=new Coin(arr[1][0],arr[1][1],color,1,this);
+    member[2]=new Coin(arr[2][0],arr[2][1],color,2,this);
+    member[3]=new Coin(arr[3][0],arr[3][1],color,3,this);
+
+    deActive.push(member[0]);
+    deActive.push(member[1]);
+    deActive.push(member[2]);
+    deActive.push(member[3]);
+}
+GreenClr::~GreenClr(){}
+
+void GreenClr::play(int num){
+    int check=deActive.empty();
+    if(num==6&&check==0)
+    {
+        Coin *temp=deActive.front();
+        deActive.pop();
+        int color=temp->getCoinClr();
+        int pos=temp->coinNumber();
+        member[pos]=NULL;
+        graph->addCoin(graph,39,temp,this);
+        temp=NULL;
+    }
+    else if(deActive.size()<4)
+    {
+        int k=0,j=0;
+        for(int i=0;i<52;i++)
+        {
+            if(graph->getClr(graph,i)==2)
+            {
+                k=graph->getX(graph,i);
+                j=graph->getY(graph,i);
+                break;
+            }
+        }
+        graph->newLoc(graph,k,j,num,this);
+    }
+}
+int GreenClr::getX(int num){
+    return arr[num][0];
+}
+int GreenClr::getY(int num){
+    return arr[num][1];
+
+}
+class YellowClr:public Player
+{
+private:
+
+public:
+    YellowClr(int color,Graph *graph);
+    ~YellowClr();
+    void play(int num);
+    int getX(int num);
+    int getY(int num);
+};
+YellowClr::YellowClr(int color,Graph *graph)
+{
+    this->graph=graph;
+    this->color=color;
+    int x=75+495,y=225+495;
+    arr[0][0]=x;
+    arr[0][1]=x;
+    arr[1][0]=y;
+    arr[1][1]=x;
+    arr[2][0]=x;
+    arr[2][1]=y;
+    arr[3][0]=y;
+    arr[3][1]=y;
+
+    member[0]=new Coin(arr[0][0],arr[0][1],color,0,this);
+    member[1]=new Coin(arr[1][0],arr[1][1],color,1,this);
+    member[2]=new Coin(arr[2][0],arr[2][1],color,2,this);
+    member[3]=new Coin(arr[3][0],arr[3][1],color,3,this);
+
+    deActive.push(member[0]);
+    deActive.push(member[1]);
+    deActive.push(member[2]);
+    deActive.push(member[3]);
+}
+YellowClr::~YellowClr(){}
+
+void YellowClr::play(int num){
+    int check=deActive.empty();
+    if(num==6&&check==0)
+    {
+        Coin *temp=deActive.front();
+        deActive.pop();
+        int color=temp->getCoinClr();
+        int pos=temp->coinNumber();
+        member[pos]=NULL;
+        graph->addCoin(graph,26,temp,this);
+        temp=NULL;
+    }
+    else if(deActive.size()<4)
+    {
+        int k=0,j=0;
+        for(int i=0;i<52;i++)
+        {
+            if(graph->getClr(graph,i)==COLOR(242, 255, 122))
+            {
+                k=graph->getX(graph,i);
+                j=graph->getY(graph,i);
+                break;
+            }
+        }
+        graph->newLoc(graph,k,j,num,this);
+    }
+}
+
+int YellowClr::getX(int num){
+    return arr[num][0];
+}
+int YellowClr::getY(int num){
+    return arr[num][1];
+}
+struct Node
+{
+    stack<class Coin*>member;
+    Node *next;
+    int color;
+    int x;
+    int y;
+    int num;
+    Node(int x,int y,int num);
+    ~Node();
+};
+Node::Node(int x,int y,int num):x(x),y(y),num(num),next(NULL),color(0)
+{
+
+}
+Node::~Node()
+{
+
+}
+struct AdjList
+{
+    struct Node *head;
+    struct Node *tail;
+    AdjList();
+    ~AdjList();
+};
+AdjList::AdjList():head(NULL),tail(NULL)
+{
+
+}
+AdjList::~AdjList()
+{
+
+}
+class Graph
+{
+
+private:
+    int v;
+    struct AdjList* arr;
+public:
+    Graph(int v);
+    ~Graph();
+    void addEdge(Graph *graph,int u,int x,int y,int pos);
+    void newLoc(Graph *graph,int x,int y,int call,class Player *clr);
+    void addCoin(Graph *graph,int u,class Coin *temp,class Player *clr);
+    int getX(Graph *graph,int i);
+    int getY(Graph *graph,int i);
+    int getClr(Graph *graph,int i);
+};
+
+Graph::Graph(int v):v(v)
+{
+    arr=new AdjList[v];
+}
+Graph::~Graph()
+{
+
+}
+
+void Graph::addEdge(Graph *graph,int u,int x,int y,int pos)
+{
+    Node *temp= new Node(x,y,pos);
+    if(graph->arr[u].head==NULL)
+    {
+       graph->arr[u].head=temp;
+       graph->arr[u].tail=temp;
+    }
+    else
+    {
+       graph->arr[u].tail->next=temp;
+       graph->arr[u].tail=graph->arr[u].tail->next;
+    }
+}
+
+void Graph::newLoc(Graph *graph,int x,int y,int call,class Player *clr)
+{
+    int num=0;
+    for (int i = 0; i < v; ++i)
+    {
+        Node *p=graph->arr[i].head;
+
+        if(p->x<x+25&&p->x>x-25&&p->y<y+25&&p->y>y-25)
+        {
+            if(i+call>51)
+            {
+                num=(i+call)-52;
+            }
+            else
+                num=i+call;
+            Coin *temp=p->member.top();
+            p->member.pop();
+            addCoin(graph,num,temp,clr);
+            temp=NULL;
+            break;
+        }
+
+    }
+}
+
+void Graph::addCoin(Graph *graph,int u,Coin *temp,class Player *clr)
+{
+    int num=temp->coinNumber();
+    int color=temp->getCoinClr();
+    Node *p=graph->arr[u].head;
+
+    if(p->member.empty()==1)
+    {
+        p->member.push(clr->setMember(p->x,p->y,num,color,temp));
+        p->color=p->member.top()->getCoinClr();
+    }
+    else
+    {
+        if(p->color==color)
+        {
+            p->member.push(clr->setMember(p->x,p->y,num,color,temp));
+        }
+        else
+        {
+            while(p->member.empty()!=1)
+            {
+                clr->addMember(p->member.top());
+                p->member.pop();
+            }
+            p->member.push(clr->setMember(p->x,p->y,num,color,temp));
+            p->color=temp->getCoinClr();
+        }
+    }
+}
+
+int Graph::getX(Graph *graph,int i)
+{
+    return graph->arr[i].head->x;
+}
+int Graph::getY(Graph *graph,int i)
+{
+    return graph->arr[i].head->y;
+
+}
+int Graph::getClr(Graph *graph,int i)
+{
+    if(graph->arr[i].head->member.empty()==0)
+        return graph->arr[i].head->color;
+}
+int main()
+{
+    Board test;
+    Dice d1;
+    test.create();
+    d1.box();
+
+    Graph *graph= test.createGraph();
+    Player *redClr=new RedClr(4,graph);
+    Player *blueClr= new BlueClr(1,graph);
+    Player *yellowClr= new YellowClr(COLOR(242, 255, 122),graph);
+    Player *greenClr= new GreenClr(2,graph);
+
+    int i=0,j=0,num=0;
+    while(1)
+    {
+        int x=1400,y=2;
+        getmouseclick(WM_RBUTTONDOWN,i,j);
+        if(i>=x&&i<=x+100&&j>=y&&j<=y+100)
+        {
+            break;
+        }
+        x=1000;
+        y=100;
+        if(i>=x&&i<=x+100&&j>=y&&j<=y+100)
+        {
+            num=d1.roll(i,j);
+            redClr->play(num);
+            delay(1000);
+            num=d1.roll(i,j);
+            blueClr->play(num);
+            delay(1000);
+            num=d1.roll(i,j);
+            yellowClr->play(num);
+            delay(1000);
+            num=d1.roll(i,j);
+            greenClr->play(num);
+        }
+    }
+    test.~Board();
+}
+
